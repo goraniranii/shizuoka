@@ -1,0 +1,14 @@
+{
+  "name": "겨울의 시즈오카 · 여행 노트",
+  "short_name": "시즈오카 여행",
+  "description": "시즈오카 2박 3일 일정과 준비물 체크리스트",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef1f7",
+  "theme_color": "#eef1f7",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
