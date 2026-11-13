@@ -81,7 +81,24 @@
     const selected = trip.days.find(d => d.date === localDateISO());
     const checklistTotal = trip.before.length + trip.packing.length;
     return `<section class="hero">
-      <div class="hero-visual"><span class="hero-coordinates">35° N · 138° E</span><span class="hero-jp">富士山</span><span class="hero-caption">THE BLUE DAYS OF DECEMBER</span></div>
+      <div class="hero-visual"><svg class="fuji-art-fallback" role="img" aria-label="눈이 쌓인 후지산 일러스트" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="fuji-fallback-sky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#92A8C9"/><stop offset=".68" stop-color="#BBC7DC"/><stop offset="1" stop-color="#E9DDD5"/></linearGradient>
+ <linearGradient id="fuji-fallback-mountain" x1="0" x2=".9" y1="0" y2="1"><stop stop-color="#DDE4F0"/><stop offset=".65" stop-color="#ABB9D3"/><stop offset="1" stop-color="#849BBE"/></linearGradient>
+ <linearGradient id="fuji-fallback-light" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#F4D2A2"/><stop offset="1" stop-color="#DEB68F"/></linearGradient>
+</defs>
+<path fill="url(#fuji-fallback-sky)" d="M0 0h900v540H0z"/>
+<circle cx="685" cy="122" r="44" fill="#F5D8B2" opacity=".6"/>
+<path d="M100 424C230 366 330 228 435 139c17-14 28-20 37-21 13-1 26 9 41 25 111 125 237 231 387 297v100H0V445Z" fill="url(#fuji-fallback-mountain)"/>
+<path d="M320 290c45-56 87-117 115-151 17-16 30-22 43-20 12 4 26 14 40 31 26 31 49 61 73 89l-75-38-21 28-25-50-29 35-27-35-36 63z" fill="#F3F2F2"/>
+<path d="M435 141c-34 47-49 104-105 165l-40 51 65-39 48-66 23-39 22-36z" fill="url(#fuji-fallback-light)" opacity=".92"/>
+<path d="M470 180c27 70 87 124 132 194l-26-30-75-103-21-12z" fill="#EFF0F2" opacity=".8"/>
+<path d="M0 443c103-39 205-41 315-4 94 30 188 35 288-2s190-37 297 8v95H0Z" fill="#8E9EB7" opacity=".44"/>
+<path d="M0 478c186-55 305-32 449-5 147 27 274-4 451-11v78H0Z" fill="#798EAE" opacity=".35"/>
+<g fill="#E9E5E0" opacity=".92"><rect x="40" y="454" width="145" height="90"/><rect x="170" y="435" width="188" height="112"/><rect x="346" y="459" width="112" height="85"/><rect x="667" y="470" width="203" height="75"/></g>
+<g stroke="#6B82AA" stroke-width="3" opacity=".6"><path d="M0 470h900M0 481h900"/><path d="M83 407v133m4-133h27m-27 8h27M723 425v115m5-113h26"/></g>
+<g fill="#95ABD2" opacity=".5"><rect x="66" y="476" width="40" height="40"/><rect x="116" y="476" width="45" height="40"/><rect x="203" y="461" width="54" height="65"/><rect x="271" y="461" width="54" height="65"/></g>
+</svg><img class="fuji-photo" src="./assets/fuji-hero.jpg" alt="겨울의 후지산과 시즈오카 풍경" loading="eager" fetchpriority="high" decoding="async"><span class="hero-coordinates">35° N · 138° E</span><span class="hero-jp">富士山</span><span class="hero-caption">PHOTO · 小武拉莫</span></div>
       <div class="hero-body"><p class="eyebrow">SHIZUOKA · WINTER 2026</p><h1 class="hero-title">겨울의 시즈오카<em>.</em></h1><p class="hero-subtitle">${e(trip.meta.subtitle)}</p><div class="hero-footer"><span class="hero-date">${e(trip.meta.dateDisplay)}</span><span class="hero-count">2 NIGHTS · 3 DAYS</span></div></div>
     </section>
     <div class="content-pad">
@@ -149,6 +166,9 @@
     if (!validViews.includes(view)) view = 'home';
     currentView = view;
     mount.innerHTML = view === 'home' ? renderHome() : view === 'prep' ? renderPrep() : renderDay(trip.days.find(d => d.id === view));
+    // 사진 파일 누락 시에도 inline 후지산 일러스트를 보여줍니다.
+    const heroImage = mount.querySelector('.fuji-photo');
+    if (heroImage) heroImage.addEventListener('error', () => heroImage.remove(), { once: true });
     navItems.forEach(item => {
       const active = item.dataset.view === view;
       item.classList.toggle('is-active', active);
